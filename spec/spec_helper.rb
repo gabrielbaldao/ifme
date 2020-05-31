@@ -4,7 +4,15 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  refuse_coverage_drop
+  add_filter %r{^/(?!app|lib)/}
+  add_filter %r{^/app/channels/}
+  add_filter 'app/mailers/application_mailer.rb'
+  add_filter %r{^/app/jobs/}
+  add_filter %r{^/.gitlab-cache/}
+  add_filter '.gems'
+end
 
 require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
